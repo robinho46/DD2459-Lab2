@@ -1,14 +1,15 @@
+package src.main;
 import java.io.*;
 
 public class Sorting {
     /**
      * @requires arr != null
-     *
+     * @ensures
      * @return
      */
-    public static int[] bubbleSort(int[] arr){
+    public void bubbleSort(int[] arr){
         if (arr == null){
-            assert false : "Array must not be null";
+            throw new IllegalArgumentException("Array must not be null");
         }
         int n = arr.length;
         for (int i = 0; i < n - 1; i++){
@@ -20,18 +21,10 @@ public class Sorting {
                 }
             }
         }
-        return arr;
     }
-
-    public static void main(String[] args){
-        int[] arr = {9, 3, 5, 1, 6, 10, 2, 2};
-        for(int i : arr){
-            System.out.print(i + ", ");
-        }
-        bubbleSort(arr);
-        System.out.println("Sorted with bubbleSort");
-        for(int i : arr){
-            System.out.print(i + ", ");
+    public void printArray(int[] arr){
+        for (int i : arr){
+            System.out.print(i + " ");
         }
     }
 }

@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 public class Search {
 
-    public int BinarySearch(ArrayList<Integer> A, int key) {
+    public int BinarySearch(int[] A, int key) {
         int l = 0;
-        int r = A.size() ;
+        int r = A.length-1;
         while(l <= r) {
             int x = (l + r) / 2;
-            if(A.get(x) < key) {
+            if(A[x] < key) {
                 l = x + 1;
-            } else if(A.get(x) > key) {
+            } else if(A[x] > key) {
                 r = x - 1;
             } else {
                 return x;
@@ -19,5 +19,4 @@ public class Search {
         }
         return -1; // Key not found
     }
-
 }

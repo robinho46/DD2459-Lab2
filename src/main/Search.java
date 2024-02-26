@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Search {
 
-
     public int BinarySearch(ArrayList<Integer> A, int key) {
         int l = 0;
         int r = A.size() ;

@@ -16,7 +16,9 @@ public class Main {
 
         return search.BinarySearch(arr, key) > -1;
     }
-    public static void random(){
+    public static void randomGenerator(){
+        final int MAX_SIZE = 100;
+        final int MIN_SIZE = -100;
         Random rand = new Random();
         try {
             FileWriter fw = new FileWriter("./src/test/randomTest.txt");
@@ -25,10 +27,10 @@ public class Main {
                 fw.write(N + " ");
                 int[] arr = new int[N];
                 for (int i = 0; i < arr.length; i++){
-                    arr[i] = rand.nextInt(20);
+                    arr[i] = rand.nextInt(MIN_SIZE, MAX_SIZE);
                     fw.write(arr[i] + " ");
                 }
-                int target = rand.nextInt(1, 20);
+                int target = rand.nextInt(MIN_SIZE, MAX_SIZE);
                 fw.write(" " + target + "\n"); // Add a newline after writing all elements of an array
             }
             fw.close();
@@ -42,6 +44,6 @@ public class Main {
         int[] arr = {9, 3, 5, 1, 6, 10, 2, 2};
         boolean temp = membership(arr, 5);
         System.out.println(temp);
-        //random();
+        randomGenerator();
     }
 }

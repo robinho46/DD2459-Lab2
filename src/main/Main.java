@@ -40,10 +40,43 @@ public class Main {
         }
 
     }
+    public static void pairwiseGenerator(){
+        // Positive, Negative, Mixed, Zero (arr and key)
+        int[] positiveValues = new int[20];
+        int[] negativeValues = new int[20];
+        int[] mixedValues = new int[20];
+        int[] zeros = new int[20];
+        int key = 0;
+        int MAX_SIZE = 20;
+        int MIN_SIZE = -20;
+
+        for (int i = 0; i < MAX_SIZE; i++){
+            positiveValues[i] = i;
+            for (int j = 0; j < 4; j++){
+
+            }
+        }
+        for (int i = 0; i < 20; i++){
+            negativeValues[i] = -i;
+        }
+
+        Random rand = new Random();
+        for (int i = 0; i < 20; i++){
+            mixedValues[i] = rand.nextInt(-10, 10);
+        }
+        for (int i = 0; i < 20; i++){
+            zeros[i] = 0;
+        }
+        /*for (int i : zeros){
+            System.out.print(i + " ");
+        }*/
+    }
     public static void main(String[] args){
         int[] arr = {9, 3, 5, 1, 6, 10, 2, 2};
         boolean temp = membership(arr, 5);
         System.out.println(temp);
-        randomGenerator();
+        //randomGenerator();
+        //pairwiseGenerator();
+        pairwiseGenerator();
     }
 }

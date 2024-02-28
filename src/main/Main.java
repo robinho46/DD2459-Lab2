@@ -24,14 +24,14 @@ public class Main {
             FileWriter fw = new FileWriter("./src/test/randomTest.txt");
             for (int j = 0; j < 4; j++){
                 int N = rand.nextInt(1, 20);
-                fw.write(N + " ");
+                //fw.write(N + " ");
                 int[] arr = new int[N];
                 for (int i = 0; i < arr.length; i++){
                     arr[i] = rand.nextInt(MIN_SIZE, MAX_SIZE);
                     fw.write(arr[i] + " ");
                 }
                 int target = rand.nextInt(MIN_SIZE, MAX_SIZE);
-                fw.write(" " + target + "\n"); // Add a newline after writing all elements of an array
+                fw.write("\n"); // Add a newline after writing all elements of an array
             }
             fw.close();
 
@@ -40,42 +40,56 @@ public class Main {
         }
 
     }
-    public static void pairwiseGenerator(){
-        // Positive, Negative, Mixed, Zero (arr and key)
-        int[] positiveValues = new int[20];
-        int[] negativeValues = new int[20];
-        int[] mixedValues = new int[20];
-        int[] zeros = new int[20];
-        int key = 0;
-        int MAX_SIZE = 20;
-        int MIN_SIZE = -20;
+    public static void pairwiseGenerator() {
+        int[] arr = new int[20];
+        try {
+            FileWriter fw = new FileWriter("./src/test/pairWiseTest.txt");
 
-        for (int i = 0; i < MAX_SIZE; i++){
-            positiveValues[i] = i;
-            for (int j = 0; j < 4; j++){
+            // 0-wise already done with default value 0
+            for(int r : arr){
+                fw.write(r + " ");
+            }
+            fw.write("\n===========================================================\n\n");
+
+            // 1-wise
+            for (int j = 0; j < arr.length; j++) {
+                arr[j] = 1;
+                for (int i : arr){
+                    fw.write(i + " ");
+
+                }
+                fw.write("\n");
+                arr[j] = 0;
+            }
+
+            fw.write("\n===========================================================\n\n");
+            // 2-wise
+
+
+            for (int i = 0; i < arr.length; i++) {
+                arr[i] = 1;
+                for (int k = i + 1; k < arr.length; k++) {
+                    arr[k] = 2;
+                    for (int p : arr){
+                        fw.write(p + " ");
+                    }
+                    fw.write("\n");
+                    arr[k] = 0;
+                }
+                fw.write("\n");
+                arr[i] = 0;
 
             }
+            fw.close();
+        }catch (IOException e){
+            e.printStackTrace();
         }
-        for (int i = 0; i < 20; i++){
-            negativeValues[i] = -i;
-        }
-
-        Random rand = new Random();
-        for (int i = 0; i < 20; i++){
-            mixedValues[i] = rand.nextInt(-10, 10);
-        }
-        for (int i = 0; i < 20; i++){
-            zeros[i] = 0;
-        }
-        /*for (int i : zeros){
-            System.out.print(i + " ");
-        }*/
     }
-    public static void main(String[] args){
+    public static void main(String[] args) {
         int[] arr = {9, 3, 5, 1, 6, 10, 2, 2};
         boolean temp = membership(arr, 5);
         System.out.println(temp);
-        //randomGenerator();
+        randomGenerator();
         //pairwiseGenerator();
         pairwiseGenerator();
     }

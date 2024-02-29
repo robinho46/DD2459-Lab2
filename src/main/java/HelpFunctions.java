@@ -85,25 +85,25 @@ public class HelpFunctions {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] numberStrings = line.trim().split("\\s+");
-                if (numberStrings.length != 20) {
-                    System.err.println("Line does not contain exactly 20 elements: " + line);
-                    continue; // Skip this line or you might want to handle this differently
-                }
                 int[] numbers = new int[numberStrings.length];
                 for (int i = 0; i < numberStrings.length; i++) {
                     try {
                         numbers[i] = Integer.parseInt(numberStrings[i]);
                     } catch (NumberFormatException e) {
-                        System.err.println("Error parsing integer on line: " + (lines.size() + 1) + " Value: " + numberStrings[i]);
-                        // You might want to skip this line or handle this differently
+                        System.err.println("Error parsing integer on line: " + (lines.size() + 1) + ", Value: '" + numberStrings[i] + "'. Skipping this value.");
+                        // Optionally, you might want to set a default value or skip this line
+                        // For now, let's simply continue to the next iteration
+                        continue;
                     }
                 }
                 lines.add(numbers);
             }
         } catch (IOException e) {
-            e.printStackTrace(); // Log the exception
+            System.err.println("An error occurred while reading from the file.");
+            e.printStackTrace();
         }
         return lines;
     }
+
 
 }

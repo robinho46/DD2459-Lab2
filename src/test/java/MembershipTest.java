@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -93,6 +94,8 @@ public class MembershipTest {
     @AfterEach
     void tearDown() {
         //ta bort pairwiseTest.txt
+        File file = new File("./src/testFiles/pairWiseTest.txt");
+        file.delete();
     }
 
     @AfterAll

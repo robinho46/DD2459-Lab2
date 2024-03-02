@@ -16,14 +16,14 @@ public class MembershipTest {
     public static int keyMissing;
     public static int keyExistDefault;
     public static String RESULT_FILE_PATH = "pairwiseTestResult.txt";;
-    public static String FILE_PATH = "./src/testFiles/pairWiseTest.txt";
+    public static String TEST_FILE_PATH = "./src/testFiles/pairWiseTest.txt";
     int passedTests;
 
 
     @BeforeAll
     static void setupAll() throws IOException {
         HelpFunctions.pairwiseGenerator();
-        pairwiseVec = HelpFunctions.readFromFile(FILE_PATH);
+        pairwiseVec = HelpFunctions.readFromFile(TEST_FILE_PATH);
         keyExist = 1;
         keyMissing = 100;
         keyExistDefault = 0;
@@ -95,7 +95,7 @@ public class MembershipTest {
     @AfterEach
     void tearDown() {
         //ta bort pairwiseTest.txt
-        File file = new File(FILE_PATH);
+        File file = new File(TEST_FILE_PATH);
         file.delete();
     }
 

@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RandomTest {
     public static List<int[]> randomList;
 
-    public static String RESULT_FILE_PATH = "randomTestResult.txt";
+    public static String RESULT_FILE_PATH = "./src/testFiles/randomTestResult.txt";
     public static String TEST_FILE_PATH = "./src/testFiles/randomTest.txt";
     public static int passedTests;
     public static int keyExist;
@@ -21,12 +21,11 @@ public class RandomTest {
 
     @BeforeAll
     static void setupAll() throws IOException {
-        HelpFunctions.pairwiseGenerator();
+        HelpFunctions.randomGenerator();
         randomList = HelpFunctions.readFromFile(TEST_FILE_PATH);
         keyMissing = 1000;
         keyExistDefault = 0;
         Files.writeString(Paths.get(RESULT_FILE_PATH), "", StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-
     }
 
     @BeforeEach
@@ -34,7 +33,6 @@ public class RandomTest {
         // This method runs before each test
         // Ideal for setting up test-specific conditions if necessary
     }
-
 
     @Test
     void randomIsPositive() throws IOException {
@@ -60,7 +58,7 @@ public class RandomTest {
                 Files.createDirectories(Paths.get(RESULT_FILE_PATH).getParent());
 
                 // Attempt to write to the file
-                Files.writeString(Paths.get(RESULT_FILE_PATH), "Your content here", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                //Files.writeString(Paths.get(RESULT_FILE_PATH), "Your content here", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
             } catch (IOException e) {
                 e.printStackTrace(); // Log or print any exceptions
             }
@@ -69,7 +67,7 @@ public class RandomTest {
         // Build and write the summary
         StringBuilder sb = new StringBuilder();
         sb.append("Key found in: ").append(passedTests).append(" Test cases\n");
-        sb.append("Default key = ").append(keyExistDefault).append("\n"); // This line might need adjustment based on actual test logic relevance
+        sb.append("Default key = ").append("First element in each array").append("\n"); // This line might need adjustment based on actual test logic relevance
 
         Files.writeString(Paths.get(RESULT_FILE_PATH), sb.toString(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
     }
@@ -110,8 +108,7 @@ public class RandomTest {
     @AfterEach
     void tearDown() {
         //ta bort pairwiseTest.txt
-        File file = new File(TEST_FILE_PATH);
-        file.delete();
+        //File file = new File(TEST_FILE_PATH);
+        //file.delete();
     }
 }
-

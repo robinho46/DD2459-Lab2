@@ -15,4 +15,11 @@ public class Search {
         }
         return -1; // Key not found
     }
+
+    public boolean membership(int[] vec, int key) {
+        Sorting sort = new Sorting();
+        sort.bubbleSort(vec);
+        int result = BinarySearch(vec, key);
+        return result != -1;
+    }
 }

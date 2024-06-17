@@ -15,7 +15,7 @@ public class MembershipTest {
     public static int keyExist;
     public static int keyMissing;
     public static int keyExistDefault;
-    public static String RESULT_FILE_PATH = "pairwiseTestResult.txt";;
+    public static String RESULT_FILE_PATH = "./src/testFiles/pairwiseTestResult.txt";
     public static String TEST_FILE_PATH = "./src/testFiles/pairWiseTest.txt";
     int passedTests;
 

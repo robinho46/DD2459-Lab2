@@ -18,8 +18,8 @@ public class HelpFunctions {
         Random rand = new Random();
 
         try (FileWriter fw = new FileWriter(RANDOM_TEST_FILE)) {
-            for (int j = 0; j < 10; j++) {
-                int N = rand.nextInt(1, 20);
+            for (int j = 0; j < 20; j++) {
+                int N = 20;
                 int[] arr = new int[N];
                 for (int i = 0; i < arr.length; i++) {
                     arr[i] = rand.nextInt(MIN_SIZE, MAX_SIZE);

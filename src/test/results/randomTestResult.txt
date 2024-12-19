@@ -1,0 +1,21 @@
+Random Test Results
+Starting Positive Test with Multiple Runs
+Run 0: Test case 4 failed with key not found: 88
+Run 0 Summary: Passed tests = 9, First failure at index = 4
+Run 1 Summary: Passed tests = 10, First failure at index = -1
+Run 2 Summary: Passed tests = 10, First failure at index = -1
+Run 3 Summary: Passed tests = 10, First failure at index = -1
+Run 4 Summary: Passed tests = 10, First failure at index = -1
+Run 5 Summary: Passed tests = 10, First failure at index = -1
+Run 6 Summary: Passed tests = 10, First failure at index = -1
+Run 7 Summary: Passed tests = 10, First failure at index = -1
+Run 8 Summary: Passed tests = 10, First failure at index = -1
+Run 9 Summary: Passed tests = 10, First failure at index = -1
+Average index of first failure across 10 runs: 4.0
+
+Starting Positive Test
+Positive Test Summary: Key found in 10 test cases
+
+Starting Negative Test
+Negative Test Summary: Key missing in 10 test cases
+

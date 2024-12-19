@@ -1,6 +1,5 @@
 import org.junit.jupiter.api.*;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -8,16 +7,14 @@ import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 public class RandomTest {
     public static List<int[]> randomList;
-
-    public static String RESULT_FILE_PATH = "./src/testFiles/randomTestResult.txt";
-    public static String TEST_FILE_PATH = "./src/testFiles/randomTest.txt";
-    public static int passedTests;
-    public static int keyExist;
-    public static int keyMissing;
-    public static int keyExistDefault;
-
+    private static final String RESULT_FILE_PATH = "./src/test/results/randomTestResult.txt";
+    private static final String TEST_FILE_PATH = "./src/main/resources/randomTest.txt";
+    private static final int TOTAL_RUNS = 10;
+    private static int keyMissing;
+    private static int keyExistDefault;
 
     @BeforeAll
     static void setupAll() throws IOException {
@@ -25,90 +22,96 @@ public class RandomTest {
         randomList = HelpFunctions.readFromFile(TEST_FILE_PATH);
         keyMissing = 1000;
         keyExistDefault = 0;
-        Files.writeString(Paths.get(RESULT_FILE_PATH), "", StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-    }
 
-    @BeforeEach
-    void setup() {
-        // This method runs before each test
-        // Ideal for setting up test-specific conditions if necessary
+        Files.writeString(Paths.get(RESULT_FILE_PATH), "Random Test Results\n", StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
     }
 
     @Test
     void randomIsPositive() throws IOException {
+        log("Starting Positive Test\n");
+
         Search s = new Search();
-        int passedTests = 0; // Initialize passedTests for this test
+        int passedTests = 0;
 
         for (int i = 0; i < randomList.size(); i++) {
             int[] testCase = randomList.get(i);
-            int keyToCheck = testCase[0]; // Directly use the first element as the key for this test case
+            int keyToCheck = testCase[0];
 
-            boolean result;
             try {
-                result = s.membership(testCase, keyToCheck);
+                boolean result = s.membership(testCase, keyToCheck);
                 Assertions.assertTrue(result);
                 passedTests++;
             } catch (AssertionError e) {
-                // Log failure without stopping execution
-                String message = "Test case: " + i + " failed with key not found: " + keyToCheck + "\n";
-                Files.writeString(Paths.get(RESULT_FILE_PATH), message, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-            }
-            try {
-                // Ensure the directory exists
-                Files.createDirectories(Paths.get(RESULT_FILE_PATH).getParent());
-
-                // Attempt to write to the file
-                //Files.writeString(Paths.get(RESULT_FILE_PATH), "Your content here", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-            } catch (IOException e) {
-                e.printStackTrace(); // Log or print any exceptions
+                log("Test case " + i + " failed with key not found: " + keyToCheck + "\n");
             }
         }
 
-        // Build and write the summary
-        StringBuilder sb = new StringBuilder();
-        sb.append("Key found in: ").append(passedTests).append(" Test cases\n");
-        sb.append("Default key = ").append("First element in each array").append("\n"); // This line might need adjustment based on actual test logic relevance
-
-        Files.writeString(Paths.get(RESULT_FILE_PATH), sb.toString(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+        log("Positive Test Summary: Key found in " + passedTests + " test cases\n\n");
     }
 
     @Test
     void randomIsNegative() throws IOException {
-        Search s = new Search();
-        int passedTests = 0; // Reset passedTests for this test
+        log("Starting Negative Test\n");
 
-        // Ensure the directory exists for the result file
-        Files.createDirectories(Paths.get(RESULT_FILE_PATH).getParent());
+        Search s = new Search();
+        int passedTests = 0;
 
         for (int i = 0; i < randomList.size(); i++) {
             int[] testCase = randomList.get(i);
-            int keyToCheck = keyMissing; // Use the keyMissing for this negative test
 
-            boolean result;
             try {
-                result = s.membership(testCase, keyToCheck);
+                boolean result = s.membership(testCase, keyMissing);
                 Assertions.assertFalse(result);
                 passedTests++;
             } catch (AssertionError e) {
-                // Log failure without stopping execution
-                String message = "Test case: " + i + " failed with key found: " + keyToCheck + "\n";
-                Files.writeString(Paths.get(RESULT_FILE_PATH), message, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-                // Do not return; continue with the next test case
+                log("Test case " + i + " failed with key found: " + keyMissing + "\n");
             }
         }
 
-        // Build and write the summary
-        StringBuilder sb = new StringBuilder();
-        sb.append("Key missing in: ").append(passedTests).append(" Test cases\n");
-        sb.append("Key = ").append(keyMissing).append("\n-----\n");
-
-        Files.writeString(Paths.get(RESULT_FILE_PATH), sb.toString(), StandardOpenOption.APPEND);
+        log("Negative Test Summary: Key missing in " + passedTests + " test cases\n\n");
     }
 
-    @AfterEach
-    void tearDown() {
-        //ta bort pairwiseTest.txt
-        //File file = new File(TEST_FILE_PATH);
-        //file.delete();
+    @Test
+    void randomIsPositiveMultipleRuns() throws IOException {
+        log("Starting Positive Test with Multiple Runs\n");
+
+        Search s = new Search();
+        int totalFailures = 0;
+        int failedRuns = 0;
+
+        for (int run = 0; run < TOTAL_RUNS; run++) {
+            int firstFailureIndex = -1;
+            int passedTests = 0;
+
+            for (int i = 0; i < randomList.size(); i++) {
+                int[] testCase = randomList.get(i);
+                int keyToCheck = testCase[0];
+
+                try {
+                    boolean result = s.membership(testCase, keyToCheck);
+                    Assertions.assertTrue(result);
+                    passedTests++;
+                } catch (AssertionError e) {
+                    if (firstFailureIndex == -1) {
+                        firstFailureIndex = i;
+                        failedRuns++;
+                    }
+                    log("Run " + run + ": Test case " + i + " failed with key not found: " + keyToCheck + "\n");
+                }
+            }
+
+            if (firstFailureIndex != -1) {
+                totalFailures += firstFailureIndex;
+            }
+
+            log("Run " + run + " Summary: Passed tests = " + passedTests + ", First failure at index = " + firstFailureIndex + "\n");
+        }
+
+        double averageFailureIndex = (failedRuns > 0) ? (double) totalFailures / failedRuns : -1;
+        log("Average index of first failure across " + TOTAL_RUNS + " runs: " + averageFailureIndex + "\n\n");
+    }
+
+    private void log(String message) throws IOException {
+        Files.writeString(Paths.get(RESULT_FILE_PATH), message, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
     }
 }

@@ -2,7 +2,7 @@ public class Search {
 
     public int BinarySearch(int[] A, int key) {
         int l = 0;
-        int r = A.length-1;
+        int r = A.length-2;
         while(l <= r) {
             int x = (l + r) / 2;
             if(A[x] < key) {
